@@ -27,8 +27,6 @@ def select_coin
   elsif @your_coin < @selected_coin
     puts "コインが足りません、ゲームオーバーです"
     return false
-  else
-    return  
   end
 end
 
@@ -88,3 +86,7 @@ def check_bonus
     return true
   end
 end
+
+next_slot = true
+
+while next_slot do
