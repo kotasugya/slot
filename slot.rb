@@ -12,10 +12,6 @@
 # ポイント：0
 # ※上記の増減は後で決める
 
-# # コインを入れる枚数を表示する
-# 0 (10枚) 1(20枚) 2(30枚)
-# 手持ちのコインが選択枚数分減少する
-
 # 手持ちのコインとポイントを表示する
 def your_assets
   your_coin = 100 - coins[selected_coin]
@@ -23,15 +19,19 @@ def your_assets
   puts "あなたの所持コインは#{your_coin}枚、ポイントは#{your_point}です"
 end
 
-# 入れるコインを選択する(選択肢の範囲外は繰り返し)
+# 入れるコインを選択する(選択肢の範囲外は繰り返し、コインが足りなければゲームオーバー)
 def select_coin
   puts "入れるコインの枚数を選択してください"
-  puts "0(10枚), 1(20枚), 2(30枚)"
+  puts "0(10枚), 1(20枚), 2(30枚) 3(ゲームをやめる)"
   selected_coin = gets.to_i
-  if  check_range(selected_coin, 0,2)
+  if  check_range(selected_coin, 0,3)
     select_coin
+  elsif your_coin > select_coin
+    puts "コインが足りません、ゲームオーバーです"
+    return false
   else
     return  selected_coin
+  end
 end
 
 # 入れたコインの枚数を表示する、残りのコインを表示する
@@ -41,15 +41,26 @@ def print_selected_coin
   puts "コインを#{coins[selected_coin]}枚入れました。"
   puts "残りのコインは#{your_coin}枚です"
   puts "------------------"
+end
 
+# スロットを回す
+def spin_slot
+  slot_nums = [1,2,3,4,5,6,7,8,9]
+  puts "エンターを押してください"
+  enter = gets
+  if enter != ""
+  (0..2).each do |i|
+      slot_num = slot_nums[rand(slot_nums.length)]
+      puts "|#{slot_num}|"
+    end
+  end
+end
 
-# 選択肢の範囲内かどうかチェック
-# 0~2以外の選択肢を選んだ場合は、再び選ばせる
+spin_slot
 
-# # スロットを回せる状態か判断する
-# 手持ちコインが10枚未満の場合は、ゲームオーバー
+# 必ず初回のスロットが回る
 
-# # スロットを回す
+# スロットを回す
 # コインを入れると１列(1~9)の数字がランダムで決まる処理を作成する
 # これを３回繰り返し処理する
 
