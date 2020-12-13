@@ -6,7 +6,7 @@ $FIRST_POINT = 0
 # 手持ちコインとポイント
 def your_assets
   if @take_coin
-    @your_coin = $FIRST_COIN - @take_coin
+    @your_coin -= @take_coin
     @your_point = $FIRST_POINT
     puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{$FIRST_POINT}です"
   elsif @take_coin && @get_point
@@ -39,7 +39,7 @@ def select_coin
   elsif @selected_num == 3
     puts "しっぽを巻いて逃げ出した"
     return false
-  elsif @your_coin or $FIRST_COIN < @take_coin
+  elsif @your_coin && @your_coin < @take_coin
     puts "コインが足りません、ゲームオーバーです"
     return false
   else
