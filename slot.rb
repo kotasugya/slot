@@ -1,18 +1,17 @@
 $SLOT_NUMS = [1,2,3,4,5,6,7,8,9]
 $COINS = [10, 20, 30]
-$FIRST_COIN = 100
+$FIRST_COIN = 500
 $FIRST_POINT = 0
 
 # 手持ちコインとポイント
 def your_assets
-  if @take_coin
+  if @take_coin && @get_point
     @your_coin -= @take_coin
-    @your_point = $FIRST_POINT
-    puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{$FIRST_POINT}です"
-  elsif @take_coin && @get_point
-    @your_coin = $FIRST_COIN - @take_coin
     @your_point += @get_point
     puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{@your_point}です"
+  elsif @take_coin
+    @your_coin -= @take_coin
+    puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{$FIRST_POINT}です"
   else
     puts "あなたの所持コインは#{$FIRST_COIN}枚、ポイントは#{$FIRST_POINT}です"
   end
@@ -106,6 +105,14 @@ def check_bonus
 end
 
 next_game = true
+
+max = 9
+(1..max).each{|i|
+  print "\r#{i}"
+  sleep(0.1)
+}
+@your_coin = $FIRST_COIN
+@your_point = $FIRST_POINT
 
 while next_game do
   next_game = spin_slot
