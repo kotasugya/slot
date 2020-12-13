@@ -1,11 +1,21 @@
 $SLOT_NUMS = [1,2,3,4,5,6,7,8,9]
 $COINS = [10, 20, 30]
+$FIRST_COIN = 100
+$FIRST_POINT = 0
 
 # 手持ちコインとポイント
 def your_assets
-  @your_coin = 100
-  @your_point = 0
-  puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{@your_point}です"
+  if @take_coin
+    @your_coin = $FIRST_COIN - @take_coin
+    @your_point = $FIRST_POINT
+    puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{$FIRST_POINT}です"
+  elsif @take_coin && @get_point
+    @your_coin = $FIRST_COIN - @take_coin
+    @your_point += @get_point
+    puts "あなたの所持コインは#{@your_coin}枚、ポイントは#{@your_point}です"
+  else
+    puts "あなたの所持コインは#{$FIRST_COIN}枚、ポイントは#{$FIRST_POINT}です"
+  end
   return select_coin
 end
 
@@ -29,7 +39,7 @@ def select_coin
   elsif @selected_num == 3
     puts "しっぽを巻いて逃げ出した"
     return false
-  elsif @your_coin < @take_coin
+  elsif @your_coin or $FIRST_COIN < @take_coin
     puts "コインが足りません、ゲームオーバーです"
     return false
   else
